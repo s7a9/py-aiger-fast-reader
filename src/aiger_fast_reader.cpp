@@ -86,16 +86,18 @@ private:
     }
 
     void read_and_gates(std::ifstream &file) {
+        file.get(); // Skip newline character
         for (uint32_t i = 0; i < num_and_gates; ++i) {
             uint32_t delta0 = decode_uint(file);
             uint32_t delta1 = decode_uint(file);
-            auto lhs = 2 * (num_inputs + num_latches + i + 1);
-            and_gates[pybind11::cast(lhs)] = pybind11::make_tuple(delta0, delta1);
+            uint32_t lhs = 2 * (num_inputs + num_latches + i + 1);
+            uint32_t rhs0 = lhs - delta0;
+            uint32_t rhs1 = rhs0 - delta1;
+            and_gates[pybind11::cast(lhs)] = pybind11::make_tuple(rhs0, rhs1);
         }
     }
 
 public:
-    // 读取 AIG 文件
     void read_aig_file(const std::string& filename) {
         std::ifstream file(filename, std::ios::binary);
         if (!file) {
@@ -108,7 +110,7 @@ public:
         read_and_gates(file);
 
         // Set input literals
-        for (uint32_t i = 0; i < num_inputs; ++i) {
+        for (uint32_t i = 1; i <= num_inputs; ++i) {
             input_literals.push_back(i * 2);
         }
 
