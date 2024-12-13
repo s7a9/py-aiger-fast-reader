@@ -1,0 +1,27 @@
+[build-system]
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+    "cmake>=3.10",
+    "pybind11>=2.6.0"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiger-fast-reader"
+version = "0.1.0"
+authors = [
+  { name="Du Chuheng", email="chuhengdu@gmail.com" },
+]
+description = "A fast reader for aiger binary format."
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/s7a9/py-aiger-fast-reader"
+Issues = "https://github.com/s7a9/py-aiger-fast-reader/issues"
